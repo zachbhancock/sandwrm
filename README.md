@@ -20,7 +20,7 @@ And that's it!
 
 ## Riding the sandwrm
 
-The beauty of the **sandwrm** is it needs but a single function, though it does require a tiny bit of data preparation on your part. You will need to supply two matricies: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
+The beauty of the **sandwrm** is it needs but a single function, though it does require a tiny bit of data preparation on your part. You will need to supply two matrices: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
 
 ```r
 library(fields)
