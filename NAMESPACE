@@ -1,4 +1,4 @@
-export(runWM)
+export(sandwrm)
 export(ml2init)
 export(getIdxsG)
 export(makeParaHom)
