@@ -8,10 +8,10 @@ sandwrm(dataBlock=dataBlock, nChains=nChains, nIter=nIter, prefix="prefix")
 Bayesian estimation of parameters of the Wright-Malecot model. dataBlock is prepared as below, nChains is the number of independent MCMC chains to run, nIter is how many steps per chain, and prefix is the name that will be affixed to the output files.
 }
 \examples{
-locs <- read.table("data/example_locs.txt", header=TRUE)
-coords <- sampled[,c("x","y")]
+data("example_locs", "example_pwp")
+coords <- example_locs[,c("x","y")]
 geoDist <- fields::rdist(coords)
-pwp <- data.matrix(read.table("data/example_pwp.csv", header=TRUE))
+pwp <- data.matrix(example_pwp)
 hom <- 1-pwp
 # add inbreeding, this standardizes the diagonal to 1
 diag(hom) <- 1
