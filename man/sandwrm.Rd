@@ -11,7 +11,7 @@ Bayesian estimation of parameters of the Wright-Malecot model. dataBlock is prep
 data("example_locs", "example_pwp")
 coords <- example_locs[,c("x","y")]
 geoDist <- fields::rdist(coords)
-pwp <- as.matrix(example_pwp)
+pwp <- data.matrix(example_pwp)
 hom <- 1-pwp
 # add inbreeding, this standardizes the diagonal to 1
 diag(hom) <- 1
