@@ -1,5 +1,5 @@
 .onLoad <- function(libname, pkgname) {
-  print("
+  calling <- r"{
   thump...
   thump...
   thump...
@@ -10,5 +10,6 @@
     \   \      /  /_\  \   |  . `  | |  |  |  |  \            /   |      /     |  |\/|  |
 .----)   |    /  _____  \  |  |\   | |  '--'  |   \    /\    /    |  |\  \----.|  |  |  |
 |_______/    /__/     \__\ |__| \__| |_______/     \__/  \__/     | _| `._____||__|  |__|
-                                                                                         ")
+  SPATIAL ANALYSIS of NEIGHBORHOOD SIZE and DIVERSITY with the WRIGHT MALECOT MODEL}"
+  cat(calling)
 }
