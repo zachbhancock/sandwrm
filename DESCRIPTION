@@ -1,0 +1,12 @@
+Package: sandwrm
+Version: 0.1.0
+Date: 2025-1-06
+Title: Spatial Analysis of Neighborhood size and Diversity with the WRight Malecot model
+Description: A method for estimating Wright's neighborhood size and collecting-phase pi using a Bayesian approach. This package contains code for running the analysis, example data, and data visualization tools.
+Authors@R: 
+    person("ZB", "Hancock", email="hancockz@umich.edu", role = c("aut", "cre")
+           )
+    person("GS", "Bradburd", email="gbradburd@umich.edu", role=c("aut", "cre"))
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
