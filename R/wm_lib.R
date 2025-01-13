@@ -12,7 +12,7 @@ stanFile <- "R/models/wm_hom_cmpPar_mod_block_scaled.R"
 source(stanFile)
 ibsMod <- stan_model(model_code=stanBlock)
 
-runWM <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FALSE,nMLruns=NULL,Gmodel=FALSE){
+sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FALSE,nMLruns=NULL,Gmodel=FALSE){
   if(MLjumpstart){
     if(is.null(nMLruns)){
       stop("\nyou must specify the number of maximum liklihood jumpstart runs to perform\n")
