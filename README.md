@@ -2,7 +2,7 @@
 
 Welcome! This repo is where the **sandwrm** lives - proceed with caution. 
 
-**sandwrm** is a statistical tool for inferring Wright's neighborhood size and species-level diversity from pairwise geographic and genetic distances. For theoretical background, check out our * [paper](https://academic.oup.com/genetics/article/227/4/iyae094/7691213). The method paper is in development, Hancock Z.B. & Bradburd G.S. (in prep). 
+**sandwrm** is a statistical tool for inferring Wright's neighborhood size and species-level diversity from pairwise geographic and genetic distances. For theoretical background, check out our [paper](https://academic.oup.com/genetics/article/227/4/iyae094/7691213). The method paper is in development, Hancock Z.B. & Bradburd G.S. (in prep). 
 
 **sandwrm** stands for "**S**patial **A**nalysis of **N**eighborhood size and **D**iversity with the **WR**ight **M**alecot model." Below, we provide a brief description of how to use the package. 
 
@@ -10,11 +10,11 @@ Welcome! This repo is where the **sandwrm** lives - proceed with caution.
 
 To install:
 
-'''r
+```r
 library(devtools)
 install_github("zachbhancock/sandwrm")
 library(sandwrm)
-'''r
+```
 
 And that's it!
 
@@ -22,37 +22,37 @@ And that's it!
 
 The beauty of the **sandwrm** is it needs but a single function, though it does require a tiny bit of data preparation on your part. You will need to supply two matricies: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
 
-'''r
+```r
 library(fields)
 sampled <- read.table("your_locations_file.txt", header=TRUE)
 coords <- sampled[,c("x","y")]
 geoDist <- fields::rdist(coords)
-'''r
+```
 
 Next, you want to convert your genetic distances, which are normally expressed as expected heterozygosity, to expected homozygosity. This is easy, just do:
 
-'''r
+```r
 sampled.coal <- data.matrix(read.table("your_genetic_distance_file.csv", header=TRUE))  
 pwp <- sampled.coal
 hom <- 1-pwp
 diag(hom) <- 1 #add inbreeding
-'''r
+```
 
 Almost there! Now, all you need to do is create a data block. Do that by modifying the following:
 
-'''r
+```r
 dataBlock <- list("N"=nrow(pwp),
                   "L" = 1e4,
                   "hom"=hom,
                   "k" = 0.25,
                   "geoDist"=geoDist)
-'''r
+```
 
 Okay, let's explain some of that. The "N" is the number of individuals, the "L" is the number of loci you have, "hom" is the pairwise homozygosity matrix you created, "k" is for kappa (I'll explain that in a moment), and "geoDist" is your geographic distance matrix. With the data block made, you're now ready to ride the **sandwrm**! To do that, simply call it like so:
 
-'''r
+```r
 sandwrm(dataBlock=dataBlock, nChain=nChain, nIter=nIter, prefix="prefix")
-'''r
+```
 
 In the above, "nChain" is how many independent MCMC chains you'd like to run, "nIter" is how many steps you'd like them to take, and "prefix" is whatever you'd like your output files to be named. **sandwrm** produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plots types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. 
 
@@ -60,7 +60,7 @@ The dashed line on the third plot is for set value of "k". Theoretically, "k" is
 
 Okay, last thing - dealing with those pesky R objects! Often, we want to extract just one or a couple of variables to plot. Here's how you can get just neighborhood size from the out.Robj file:
 
-'''r
+```r
 load("out.Robj")
 nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
 #make long
@@ -69,7 +69,7 @@ nbhd_long <- plyr:adply(nbhd, c(1, 2, 3)) %>%
   mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
 #plot nbhd
 hist(nbhd_long$nbhd)
-'''r
+```
 
 The same thing can be done for species-level diversity. This parameter is "s", which is "species-level homozygosity," to convert it, simply do 1 - s! 
 
