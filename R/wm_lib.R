@@ -21,6 +21,19 @@ sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FA
   } else {
     initPars <- lapply(1:nChains,function(i){generateInitPars(dataBlock=dataBlock,nChains=nChains,Gmodel=Gmodel,prefix=prefix)})
   }
+  calling <- r"{
+  thump...
+  thump...
+  thump...
+  you've called the...
+  _______.     ___      .__   __.  _______  ____    __    ____ .______      .___  ___.
+  /       |    /   \     |  \ |  | |       \ \   \  /  \  /   / |   _  \     |   \/   |
+  |   (----`   /  ^  \    |   \|  | |  .--.  | \   \/    \/   /  |  |_)  |    |  \  /  |
+  \   \      /  /_\  \   |  . `  | |  |  |  |  \            /   |      /     |  |\/|  |
+  .----)   |    /  _____  \  |  |\   | |  '--'  |   \    /\    /    |  |\  \----.|  |  |  |
+  |_______/    /__/     \__\ |__| \__| |_______/     \__/  \__/     | _| `._____||__|  |__|
+  SPATIAL ANALYSIS of NEIGHBORHOOD SIZE and DIVERSITY with the WRIGHT MALECOT MODEL}"
+  cat(calling)
   fit <- sampling(object = stanMod,
                   data = dataBlock,
                   iter = nIter,
