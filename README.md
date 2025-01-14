@@ -6,7 +6,7 @@ Welcome! This repo is where the **sandwrm** lives - proceed with caution.
 
 **sandwrm** stands for "**S**patial **A**nalysis of **N**eighborhood size and **D**iversity with the **WR**ight **M**alecot model." Below, we provide a brief description of how to use the package. 
 
-## Calling the sandwrm 
+## Installing the sandwrm 
 
 To install:
 
@@ -18,7 +18,7 @@ library(sandwrm)
 
 And that's it!
 
-## Riding the sandwrm
+## Calling the sandwrm
 
 The beauty of the **sandwrm** is it needs but a single function, though it does require a tiny bit of data preparation on your part. You will need to supply two matrices: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
 
@@ -75,6 +75,4 @@ The same thing can be done for species-level diversity. This parameter is "s", w
 
 ## Conclusion
 
-And that's it! If you had any troubles calling or riding the **sandwrm**, feel free to post in the repo or contact me by email at hancockz (at) umich.edu. 
-
-Shai-Hulud! 
+And that's it! If you had any troubles calling the **sandwrm**, feel free to post in the repo or contact me by email at hancockz (at) umich.edu. 
