@@ -240,11 +240,11 @@ plotFit <- function(out,pHom,chainCol){
   plot(out$dataBlock$geoDist,out$myData$hom,
        ylim=range(c(pHom,out$dataBlock$hom)),type='n',
        xlab="pairwise distance",ylab="pairwise homozygosity")
+  points(out$dataBlock$geoDist,out$dataBlock$hom)
   invisible(
     lapply(seq(1,250,length.out=25),function(i){
       points(out$dataBlock$geoDist,pHom[i,,],pch=20,col=adjustcolor(chainCol,0.05))
     }))
-  points(out$dataBlock$geoDist,out$dataBlock$hom)
   abline(v=out$dataBlock$k,lty=2,lwd=1,col="darkorange1")
 }
 
