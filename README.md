@@ -26,14 +26,13 @@ The beauty of the **sandwrm** is it needs but a single function, though it does 
 library(fields)
 sampled <- read.table("your_locations_file.txt", header=TRUE)
 coords <- sampled[,c("x","y")]
-geoDist <- fields::rdist(coords)
+geoDist <- rdist(coords)
 ```
 
 Next, you want to convert your genetic distances, which are normally expressed as expected heterozygosity, to expected homozygosity. This is easy, just do:
 
 ```r
-sampled.coal <- data.matrix(read.table("your_genetic_distance_file.csv", header=TRUE))  
-pwp <- sampled.coal
+pwp <- data.matrix(read.table("your_genetic_distance_file.csv", header=TRUE))  
 hom <- 1-pwp
 diag(hom) <- 1 #add inbreeding
 ```
@@ -64,7 +63,7 @@ Okay, last thing - dealing with those pesky R objects! Often, we want to extract
 load("out.Robj")
 nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
 #make long
-nbhd_long <- plyr:adply(nbhd, c(1, 2, 3)) %>% 
+nbhd_long <- plyr::adply(nbhd, c(1, 2, 3)) %>% 
   dplyr::rename("iteration"="iterations", "chain"="chains", "nbhd"="V1") %>%
   mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
 #plot nbhd
