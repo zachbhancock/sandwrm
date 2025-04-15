@@ -18,11 +18,11 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ## sandwrm
 
-Welcome! This vignette will teach you how to run **sandwrm**.
+Welcome! This vignette will teach you how to run `sandwrm`.
 
-**sandwrm** is a statistical tool for inferring Wright's neighborhood size and species-level diversity from pairwise geographic and genetic distances. For theoretical background, check out our [paper](https://academic.oup.com/genetics/article/227/4/iyae094/7691213). The method paper is in development, Hancock Z.B. & Bradburd G.S. (in prep). 
+`sandwrm` is a statistical tool for inferring Wright's neighborhood size and species-level diversity from pairwise geographic and genetic distances. For theoretical background, check out our [paper](https://academic.oup.com/genetics/article/227/4/iyae094/7691213). The method paper is in development, Hancock Z.B. & Bradburd G.S. (in prep). 
 
-**sandwrm** stands for "**S**patial **A**nalysis of **N**eighborhood size and **D**iversity with the **WR**ight **M**alecot model." Below, we provide a brief description of how to use the package. 
+`sandwrm` stands for "`S`patial `A`nalysis of `N`eighborhood size and `D`iversity with the `WR`ight `M`alecot model." Below, we provide a brief description of how to use the package. 
 
 ## Installing the sandwrm 
 
@@ -38,7 +38,7 @@ And that's it!
 
 ## Calling the sandwrm
 
-The beauty of the **sandwrm** is it needs but a single function, though it does require a tiny bit of data preparation on your part. You will need to supply two matrices: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
+The beauty of the `sandwrm` is it needs but a single function, though it does require a tiny bit of data preparation on your part. You will need to supply two matrices: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
 
 ```r
 library(fields)
@@ -71,7 +71,7 @@ Okay, let's explain some of that. The "N" is the number of individuals, the "L" 
 sandwrm(dataBlock=dataBlock, nChain=nChain, nIter=nIter, prefix="prefix")
 ```
 
-In the above, "nChain" is how many independent MCMC chains you'd like to run, "nIter" is how many steps you'd like them to take, and "prefix" is whatever you'd like your output files to be named. **sandwrm** produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plot types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. 
+In the above, "nChain" is how many independent MCMC chains you'd like to run, "nIter" is how many steps you'd like them to take, and "prefix" is whatever you'd like your output files to be named. `sandwrm` produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plot types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. 
 
 The dashed line on the third plot is for set value of "k". Theoretically, "k" is the distance below which mating can reasonably be considered random. In pratice, this might be difficult to know; fortunately, the model is not sensitive to small values of "k", so you can test a range of values and set a lowerbound as seems appropriate for your system. Note that arbitrarily high values of "k" can decrease the model's ability to infer isolation-by-distance over short distances, which might inflate your estimates. 
 
@@ -92,4 +92,4 @@ The same thing can be done for species-level diversity. This parameter is "s", w
 
 ## Conclusion
 
-And that's it! If you had any troubles calling the **sandwrm**, feel free to post in the repo or contact me by email at hancockz (at) umich.edu. 
+And that's it! If you had any troubles calling the `sandwrm`, feel free to post in the repo or contact me by email at hancockz (at) umich.edu. 
