@@ -1,0 +1,34 @@
+---
+title: "How to format data for a sandwrm analysis"
+author: "Zach B. Hancock"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{format-data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+<!-- library(rmarkdown) ; render("format-data.Rmd",html_vignette(toc=TRUE))	-->
+
+## Suggestions for obtaining a pairwise genetic distance matrix
+This vignette will give you some suggestions of the many ways to get your data into the correct format for a `sandwrm` analysis and some discussion of the different user-input variables. 
+
+To execute the model, users provide a pairwise genetic distance matrix. Importantly, this should not be based only on variant sites (e.g., from a typical VCF), as this leads to elevated genetic distances that the model will infer as large neighborhood sizes. Instead, users should generate a pairwise genetic distance matrix that includes both monomorphic and polymorphic sites. There are several avenues to obtain this, depending on your data. 
+
+For individuals dealing with short-read, RADseq-like data, if you filter and assemble your SNPs in a program like `STACKS`, there are options to output VCFs with variant and invariation sites (function `--vcf-all` in the `populations` package). From this, users can use a program such as `pixy` (see the [documentation](https://pixy.readthedocs.io/en/latest/)), which estimates pairwise genetic distance from a VCF. 
+
+For those with low-coverage, whole-genome sequencing, many programs, such as `ANGSD`, rely on a genotype-likelihood approach to estimate SNPs. However, researchers will need to hard call SNPs using a program such as `distANGSD` (see [documentation](https://github.com/lz398/distAngsd)), which can provide the pairwise genetic distance matrix. The choice of p-value threshold to hard-call SNPs is up to the discretion of the researcher.
+
+## How many loci?
+
+The exact value of "L" to specify can be tricky. Theoretically, "L" should be the number of independent coalescent topologies across recombining genomic segments. This will rarely be known. A close approximation will be the number of independent loci thinned for linkage disequilibrium. However, for very large datasets, this can still result in a very large "L". This has the side-effect of inflating the degree of confidence in the model, and can lead to superficially narrow confidence intervals. It's therefore recommended that researchers choose a value of "L" that is less than the actual number of loci in their dataset thinned for LD. Ideally, a range of values would be examined over to ensure that your choice of "L" is not biasing how confident you should be in the inference. 
+
+## Conclusions
+
+If you have any questions about data-wrangling feel free to post in the repo or email me at hancockz (at) umich.edu! 
