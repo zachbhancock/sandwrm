@@ -70,7 +70,16 @@ nbhd_long <- plyr::adply(nbhd, c(1, 2, 3)) %>%
 hist(nbhd_long$nbhd)
 ```
 
-The same thing can be done for species-level diversity. This parameter is "s", which is "species-level homozygosity," to convert it, simply do 1 - s! 
+The same thing can be done for species-level diversity. This parameter is "s", which is "species-level homozygosity," to convert it, simply do 1 - s!
+
+The **sandwrm** package includes the following vignettes, which includes this tutorial and some suggestions for possible ways to get your hands on a pairwise genetic distance matrix:
+
+```r
+#how to run the package
+vignette(topic = "run-sandwrm", package = "sandwrm")
+#data formatting
+vignette(topic = "format-data", package = "sandwrm")
+```
 
 ## Conclusion
 
