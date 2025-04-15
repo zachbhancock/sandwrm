@@ -12,7 +12,7 @@ To install:
 
 ```r
 library(devtools)
-install_github("zachbhancock/sandwrm")
+install_github("zachbhancock/sandwrm", build_vignettes = TRUE)
 library(sandwrm)
 ```
 
