@@ -1,6 +1,6 @@
 ## sandwrm
 
-Welcome! This repo is where the **sandwrm** lives - proceed with caution. 
+Welcome! This repo is where the `sandwrm` lives - proceed with caution. 
 
 **sandwrm** is a statistical tool for inferring Wright's neighborhood size and species-level diversity from pairwise geographic and genetic distances. For theoretical background, check out our [paper](https://academic.oup.com/genetics/article/227/4/iyae094/7691213). The method paper is in development, Hancock Z.B. & Bradburd G.S. (in prep). 
 
