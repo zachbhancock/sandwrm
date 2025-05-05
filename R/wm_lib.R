@@ -12,16 +12,16 @@ stanFile <- "R/models/wm_hom_cmpPar_mod_block_scaled.R"
 source(stanFile)
 ibsMod <- stan_model(model_code=stanBlock)
 
-prepare_data <- function(N, L, pwp, k, geoDist) {
-  hom <- 1 - pwp
+prepareData <- function(genDist, geoDist, L, k){
+  hom <- 1 - genDist
   diag(hom) <- 1
-  dataBlock <- list("N" = N,
+  dataBlock <- list("N" = nrow(genDist),
                   "L" = L,
                   "hom"= hom,
                   "k" = k,
                   "geoDist" = geoDist)
   return(dataBlock)
-    }
+}
 
 sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FALSE,nMLruns=NULL,Gmodel=FALSE){
   if(MLjumpstart){
