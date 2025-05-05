@@ -1,5 +1,5 @@
-export(sandwrm)
 export(prepareData)
+export(sandwrm)
 export(ml2init)
 export(getIdxsG)
 export(makeParaHom)
