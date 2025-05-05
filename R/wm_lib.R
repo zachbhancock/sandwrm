@@ -13,14 +13,14 @@ source(stanFile)
 ibsMod <- stan_model(model_code=stanBlock)
 
 sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FALSE,nMLruns=NULL,Gmodel=FALSE){
+  dataBlock$hom <- 1 - dataBlock$hom
+  diag(dataBlock$hom) <- 1
   if(MLjumpstart){
     if(is.null(nMLruns)){
       stop("\nyou must specify the number of maximum liklihood jumpstart runs to perform\n")
     }
     initPars <- lapply(1:nChains,function(i){ml2init(db=dataBlock,mod=stanMod,nRuns=nMLruns,Gmodel=Gmodel,prefix=prefix)})
   } else {
-    dataBlock$hom <- 1 - dataBlock$hom
-    diag(dataBlock$hom) <- 1
     initPars <- lapply(1:nChains,function(i){generateInitPars(dataBlock=dataBlock,nChains=nChains,Gmodel=Gmodel,prefix=prefix)})
   }
   calling <- r"{
