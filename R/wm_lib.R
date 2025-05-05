@@ -13,11 +13,14 @@ source(stanFile)
 ibsMod <- stan_model(model_code=stanBlock)
 
 sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FALSE,nMLruns=NULL,Gmodel=FALSE){
-  convert_pwp <- function(x){
-    y <- 1 - x
-    diag(y) <- 1
-    return(y)}
-  dataBlock$hom <- convert_pwp(dataBlock$hom)
+  convert_matrix_in_list <- function(hom_list) {
+    hom <- hom_list[[3]]
+    converted_matrix <- 1 - hom
+    diag(converted_matrix) <- 1
+    hom_list[[3]] <- converted_matrix
+    return(hom_list)
+    }
+  dataBlock <- convert_matrix_in_list(dataBlock)
   if(MLjumpstart){
     if(is.null(nMLruns)){
       stop("\nyou must specify the number of maximum liklihood jumpstart runs to perform\n")
