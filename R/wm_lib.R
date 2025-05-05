@@ -12,15 +12,18 @@ stanFile <- "R/models/wm_hom_cmpPar_mod_block_scaled.R"
 source(stanFile)
 ibsMod <- stan_model(model_code=stanBlock)
 
-sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FALSE,nMLruns=NULL,Gmodel=FALSE){
-  convert_matrix_in_list <- function(hom_list, index) {
-    hom <- hom_list[[index]]
-    converted_matrix <- 1 - hom
-    diag(converted_matrix) <- 1
-    hom_list[[index]] <- converted_matrix
-    return(hom_list)
+prepare_data <- function(N, L, pwp, k, geoDist) {
+  hom <- 1 - pwp
+  diag(hom) <- 1
+  dataBlock <- list("N" = N,
+                  "L" = L,
+                  "hom"= hom,
+                  "k" = k,
+                  "geoDist" = geoDist)
+  return(dataBlock)
     }
-  dataBlock <- convert_matrix_in_list(dataBlock, 3)
+
+sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FALSE,nMLruns=NULL,Gmodel=FALSE){
   if(MLjumpstart){
     if(is.null(nMLruns)){
       stop("\nyou must specify the number of maximum liklihood jumpstart runs to perform\n")
