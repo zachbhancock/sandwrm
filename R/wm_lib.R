@@ -19,8 +19,6 @@ sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FA
     }
     initPars <- lapply(1:nChains,function(i){ml2init(db=dataBlock,mod=stanMod,nRuns=nMLruns,Gmodel=Gmodel,prefix=prefix)})
   } else {
-    dataBlock <- 1 - dataBlock
-    diag(dataBlock) <- 1
     initPars <- lapply(1:nChains,function(i){generateInitPars(dataBlock=dataBlock,nChains=nChains,Gmodel=Gmodel,prefix=prefix)})
   }
   calling <- r"{
