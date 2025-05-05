@@ -20,7 +20,6 @@ sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FA
     hom_list[[3]] <- converted_matrix
     return(hom_list)
     }
-  dataBlock <- convert_matrix_in_list(dataBlock)
   if(MLjumpstart){
     if(is.null(nMLruns)){
       stop("\nyou must specify the number of maximum liklihood jumpstart runs to perform\n")
@@ -42,6 +41,7 @@ sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FA
  |_______/    /__/     \__\ |__| \__| |_______/     \__/  \__/     | _| `._____||__|  |__|
   SPATIAL ANALYSIS of NEIGHBORHOOD SIZE and DIVERSITY with the WRIGHT MALECOT MODEL}"
   cat(calling)
+  dataBlock <- convert_matrix_in_list(dataBlock)
   fit <- sampling(object = stanMod,
                   data = dataBlock,
                   iter = nIter,
