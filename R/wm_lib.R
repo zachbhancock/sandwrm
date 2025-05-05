@@ -16,7 +16,7 @@ sandwrm <- function(stanMod=ibsMod,dataBlock,nChains,nIter,prefix,MLjumpstart=FA
   convert_pwp <- function(x){
     y <- 1 - x
     diag(y) <- 1
-    return(y)
+    return(y)}
   dataBlock$hom <- convert_pwp(dataBlock$hom)
   if(MLjumpstart){
     if(is.null(nMLruns)){
