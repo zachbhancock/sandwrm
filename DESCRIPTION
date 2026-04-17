@@ -10,6 +10,10 @@ Authors@R:
 License: GP-3
 Encoding: UTF-8
 LazyData: true
+Imports:
+    rstan,
+    fields,
+    rstantools
 Suggests:
     knitr,
     rmarkdown,
