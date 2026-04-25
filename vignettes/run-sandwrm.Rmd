@@ -89,4 +89,4 @@ vignette(topic = "format-data", package = "sandwrm")
 
 ## Conclusion
 
-And that's it! If you had any troubles calling the `sandwrm`, feel free to post in the repo or contact me by email at hancockz (at) umich.edu. 
+And that's it! If you had any troubles calling the `sandwrm`, feel free to post in the repo or contact me by email at zhancock (at) augusta.edu. 
