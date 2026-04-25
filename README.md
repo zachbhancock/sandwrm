@@ -20,14 +20,14 @@ And that's it!
 
 ## Calling the sandwrm
 
-The beauty of the `sandwrm` is it needs only two functions. You will need to supply two matrices: a genetic and a geographic distance. There is a simulated example dataset in the **data** folder (example_locs.txt and example_pwp.txt), which are the datasets used in the vignette, if you'd like to test the model before using your own data. The tutorial below assumes you have your own data and so the file names are generic.
+The beauty of the `sandwrm` is it needs only two functions. You will need to supply two matrices: a genetic and a geographic distance. There is a simulated example dataset in the **data** folder (example_locs.txt and example_pwp.txt) which we will use for this tutorial. The first is a list of geographic coordinates of individuals and the second is a pairwise genetic distance matrix.
 
-If you have coordinates for each individual, you can create a geographic distance matrix like this:
+The coordinates file can be converted into a geographic distance matrix like this:
 
 ```r
 library(fields)
-sampled <- read.table("your_locations_file.txt", header=TRUE)
-coords <- sampled[,c("x","y")]
+data("example_locs", "example_pwp")
+coords <- example_locs[,c("x","y")]
 geoDist <- rdist(coords)
 ```
 
