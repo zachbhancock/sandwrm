@@ -34,10 +34,9 @@ geoDist <- rdist(coords)
 Next, you can use the function `prepareData` to get your data into the format for a typical `sandwrm` run. 
 
 ```r
-genDist <- read.table("your_genetic_distance_file.txt", header=TRUE)
 L <- 1e4
 k <- 0.25
-dataBlock <- prepareData(genDist=genDist, geoDist=geoDist, L=L, k=k)
+dataBlock <- prepareData(genDist=example_pwp, geoDist=geoDist, L=L, k=k)
 ```
 
 Wait, what're these _L_ and _k_ variables? _L_ can typically be thought of as the number of independent loci in your dataset. The _real_ definition is a little trickier, check out our paper for more details. In general, _L_ is typically some number less than the number of loci retained after trimming for LD. Theoretically, _k_ is the distance below which mating can reasonably be considered random. In pratice, this might be difficult to know; fortunately, the model is not sensitive to small values of _k_, so you can test a range of values and set a lowerbound as seems appropriate for your system. Note that arbitrarily high values of _k_ can decrease the model's ability to infer isolation-by-distance over short distances, which might inflate your estimates. 
