@@ -26,42 +26,34 @@ Welcome! This vignette will teach you how to run `sandwrm`.
 
 ## Calling the sandwrm
 
-The beauty of the `sandwrm` is it needs but a single function, though it does require a tiny bit of data preparation on your part. You will need to supply two matrices: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
+The beauty of the `sandwrm` is it needs only two functions. You will need to supply two matrices: a genetic and a geographic distance. There is a simulated example dataset in the **data** folder (example_locs.txt and example_pwp.txt) which we will use for this tutorial. The first is a list of geographic coordinates of individuals and the second is a pairwise genetic distance matrix.
+
+The coordinates file can be converted into a geographic distance matrix like this:
 
 ```r
 library(fields)
-sampled <- read.table("your_locations_file.txt", header=TRUE)
-coords <- sampled[,c("x","y")]
+data("example_locs", "example_pwp")
+coords <- example_locs[,c("x","y")]
 geoDist <- rdist(coords)
 ```
 
-Next, you want to convert your genetic distances, which are normally expressed as expected heterozygosity, to expected homozygosity. This is easy, just do:
+Next, you can use the function `prepareData` to get your data into the format for a typical `sandwrm` run. 
 
 ```r
-pwp <- data.matrix(read.table("your_genetic_distance_file.csv", header=TRUE))  
-hom <- 1-pwp
-diag(hom) <- 1 #add inbreeding
+L <- 1e4
+k <- 0.25
+dataBlock <- prepareData(genDist=example_pwp, geoDist=geoDist, L=L, k=k)
 ```
 
-Almost there! Now, all you need to do is create a data block. Do that by modifying the following:
+Wait, what're these _L_ and _k_ variables? _L_ can typically be thought of as the number of independent loci in your dataset. The _real_ definition is a little trickier, check out our paper for more details. In general, _L_ is typically some number less than the number of loci retained after trimming for LD. Theoretically, _k_ is the distance below which mating can reasonably be considered random. In pratice, this might be difficult to know; fortunately, the model is not sensitive to small values of _k_, so you can test a range of values and set a lowerbound as seems appropriate for your system. Note that arbitrarily high values of _k_ can decrease the model's ability to infer isolation-by-distance over short distances, which might inflate your estimates. 
 
-```r
-dataBlock <- list("N"=nrow(pwp),
-                  "L" = 1e4,
-                  "hom"=hom,
-                  "k" = 0.25,
-                  "geoDist"=geoDist)
-```
-
-Okay, let's explain some of that. The "N" is the number of individuals, the "L" is the number of loci you have, "hom" is the pairwise homozygosity matrix you created, "k" is for kappa (I'll explain that in a moment), and "geoDist" is your geographic distance matrix. With the data block made, you're now ready to ride the `sandwrm`! To do that, simply call it like so:
+With the data now formatted, you're now ready to ride the `sandwrm`! To do that, simply call it like so:
 
 ```r
 sandwrm(dataBlock=dataBlock, nChain=nChain, nIter=nIter, prefix="prefix")
 ```
 
-In the above, "nChain" is how many independent MCMC chains you'd like to run, "nIter" is how many steps you'd like them to take, and "prefix" is whatever you'd like your output files to be named. `sandwrm` produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plot types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. 
-
-The dashed line on the third plot is for set value of "k". Theoretically, "k" is the distance below which mating can reasonably be considered random. In pratice, this might be difficult to know; fortunately, the model is not sensitive to small values of "k", so you can test a range of values and set a lowerbound as seems appropriate for your system. Note that arbitrarily high values of "k" can decrease the model's ability to infer isolation-by-distance over short distances, which might inflate your estimates. 
+In the above, "nChain" is how many independent MCMC chains you'd like to run. "nIter" is how many steps you'd like them to take; to account for burn-in, the minimum number of iterations is 2000, setting nIter less than this will produce an error. Lastly, "prefix" is whatever you'd like your output files to be named. `sandwrm` produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plot types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. The dashed line on the third plot is for set value of "k". The outputs will all be generated in the user's current working directory.
 
 Okay, last thing - dealing with those pesky R objects! Often, we want to extract just one or a couple of variables to plot. Here's how you can get just neighborhood size from the out.Robj file:
 
@@ -76,7 +68,7 @@ nbhd_long <- plyr::adply(nbhd, c(1, 2, 3)) %>%
 hist(nbhd_long$nbhd)
 ```
 
-The same thing can be done for species-level diversity. This parameter is "s", which is "species-level homozygosity," to convert it, simply do 1 - s! 
+The same thing can be done for species-level diversity. This parameter is "s", which is "species-level homozygosity," to convert it, simply do 1 - s!
 
 ## Conclusion
 
