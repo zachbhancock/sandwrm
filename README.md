@@ -20,7 +20,9 @@ And that's it!
 
 ## Calling the sandwrm
 
-The beauty of the `sandwrm` is it needs only two functions. You will need to supply two matrices: a genetic and a geographic distance. If you have coordinates for each individual, you can create a geographic distance matrix like this:
+The beauty of the `sandwrm` is it needs only two functions. You will need to supply two matrices: a genetic and a geographic distance. There is a simulated example dataset in the **data** folder (example_locs.txt and example_pwp.txt), which are the datasets used in the vignette, if you'd like to test the model before using your own data. The tutorial below assumes you have your own data and so the file names are generic.
+
+If you have coordinates for each individual, you can create a geographic distance matrix like this:
 
 ```r
 library(fields)
