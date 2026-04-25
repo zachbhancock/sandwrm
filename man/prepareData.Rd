@@ -11,6 +11,7 @@ Function to prepare data for a `sandwrm` analysis. User provides a genetic dista
 data("example_locs", "example_pwp")
 coords <- example_locs[,c("x","y")]
 geoDist <- fields::rdist(coords)
-dataBlock <- prepareData(genDist=example_pwp, geoDist=geoDist, L=1e4, k=0.25)
+genDist <- as.matrix(example_pwp)
+dataBlock <- prepareData(genDist=genDist, geoDist=geoDist, L=1e4, k=0.25)
 print(dataBlock)
 }
