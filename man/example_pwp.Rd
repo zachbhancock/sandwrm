@@ -7,6 +7,6 @@ example_pwp
 }
 \description{
 Pairwise pi matrix from a simulated dataset to run an example
-\code{sandwrm} analysis.
+\code{sandwrm} analysis. Loads as a data.frame, will need to be converted into a matrix.
 }
 \keyword{datasets}
