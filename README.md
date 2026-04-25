@@ -8,7 +8,7 @@ Welcome! This repo is where the `sandwrm` lives - proceed with caution.
 
 ## Installing the sandwrm 
 
-`sandwrm` relies on the following dependencies: `fields`, `rstan`, and `rstantools`. To install:
+`sandwrm` relies on the following dependencies: `fields`, `rstan`, `rstantools`, `tidyverse`, `dpylr`, and `plyr`. To install:
 
 ```r
 library(devtools)
