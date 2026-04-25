@@ -56,7 +56,15 @@ sandwrm(dataBlock=dataBlock, nChain=nChain, nIter=nIter, prefix="prefix")
 
 In the above, "nChain" is how many independent MCMC chains you'd like to run. "nIter" is how many steps you'd like them to take; to account for burn-in, the minimum number of iterations is 2000, setting nIter less than this will produce an error. Lastly, "prefix" is whatever you'd like your output files to be named. `sandwrm` produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plot types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. The dashed line on the third plot is for set value of "k". The outputs will all be generated in the user's current working directory.
 
-Okay, last thing - dealing with those pesky R objects! Often, we want to extract just one or a couple of variables to plot. Here's how you can get just neighborhood size from the out.Robj file:
+`sandwrm` is equipped with two easy visualization functions so that users can quickly plot their data. These functions are `nbhdHistogram` and `piHistogram`, each of which plot histograms of the estimated neighborhood size and species diversity, respectively. Usage is as follows:
+
+```r
+load("out.Robj")
+nbhdHistogram(out=out)
+piHistogram(out=out)
+```
+
+Lastly, if you'd like to extract one or more parameters from the R object itself, you can do so using the `dplyr` and `plyr` packages. Here's how you can get just neighborhood size from the out.Robj file:
 
 ```r
 load("out.Robj")
@@ -65,11 +73,19 @@ nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
 nbhd_long <- plyr::adply(nbhd, c(1, 2, 3)) %>% 
   dplyr::rename("iteration"="iterations", "chain"="chains", "nbhd"="V1") %>%
   mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
-#plot nbhd
-hist(nbhd_long$nbhd)
+head(nbhd_long)
 ```
 
 The same thing can be done for species-level diversity. This parameter is "s", which is "species-level homozygosity," to convert it, simply do 1 - s!
+
+The `sandwrm` package includes the following vignettes, which includes this tutorial and some suggestions for possible ways to get your hands on a pairwise genetic distance matrix:
+
+```r
+#how to run the package
+vignette(topic = "run-sandwrm", package = "sandwrm")
+#data formatting
+vignette(topic = "format-data", package = "sandwrm")
+```
 
 ## Conclusion
 
