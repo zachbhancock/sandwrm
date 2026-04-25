@@ -47,9 +47,7 @@ With the data now formatted, you're now ready to ride the `sandwrm`! To do that,
 sandwrm(dataBlock=dataBlock, nChain=nChain, nIter=nIter, prefix="prefix")
 ```
 
-In the above, "nChain" is how many independent MCMC chains you'd like to run. "nIter" is how many steps you'd like them to take; to account for burn-in, the minimum number of iterations is 2000, setting nIter less than this will produce an error. Lastly, "prefix" is whatever you'd like your output files to be named. `sandwrm` produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plot types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. 
-
-The dashed line on the third plot is for set value of "k". 
+In the above, "nChain" is how many independent MCMC chains you'd like to run. "nIter" is how many steps you'd like them to take; to account for burn-in, the minimum number of iterations is 2000, setting nIter less than this will produce an error. Lastly, "prefix" is whatever you'd like your output files to be named. `sandwrm` produces four output files: initPars.Robj, pars.Robj, out.Robj, and plots.pdf. The first two are the parameter files. The out.Robj file can be used for extracting specific variables (I'll show you how in a moment), and the last is a pdf of three plot types. The first plot shows the MCMC performance, the second is for visualizing any inferred parameters that might be correlated, and the last is the fit of the model. The dashed line on the third plot is for set value of "k". The outputs will all be generated in the user's current working directory.
 
 Okay, last thing - dealing with those pesky R objects! Often, we want to extract just one or a couple of variables to plot. Here's how you can get just neighborhood size from the out.Robj file:
 
