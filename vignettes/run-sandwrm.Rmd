@@ -26,7 +26,7 @@ Welcome! This vignette will teach you how to run `sandwrm`.
 
 ## Calling the sandwrm
 
-The beauty of the `sandwrm` is it needs only two functions. You will need to supply two matrices: a genetic and a geographic distance. There is a simulated example dataset in the **data** folder (example_locs.txt and example_pwp.txt) which we will use for this tutorial. The first is a list of geographic coordinates of individuals and the second is a pairwise genetic distance matrix.
+To call the `sandwrm`, you will need to supply two matrices: a genetic and a geographic distance. There is a simulated example dataset in the **data** folder (example_locs.txt and example_pwp.txt) which we will use for this tutorial. The first is a list of geographic coordinates of individuals and the second is a pairwise genetic distance matrix.
 
 The coordinates file can be converted into a geographic distance matrix like this:
 
