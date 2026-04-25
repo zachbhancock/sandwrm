@@ -259,6 +259,15 @@ plotFit <- function(out,pHom,chainCol){
   abline(v=out$dataBlock$k,lty=2,lwd=1,col="darkorange1")
 }
 
+nbhdHistogram <- function(out)
+nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
+#make long
+nbhd_long <- plyr::adply(nbhd, c(1, 2, 3)) %>% 
+  dplyr::rename("iteration"="iterations", "chain"="chains", "nbhd"="V1") %>%
+  mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
+#plot nbhd
+hist(nbhd_long$nbhd)
+
 #below is experimental
 #runWM_cmpLnl <- function(stanMod,dataBlock,nChains,nIter,prefix){
 #  message("running ML analyses to generate initial parameter estimates")
