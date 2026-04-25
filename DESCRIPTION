@@ -13,7 +13,9 @@ LazyData: true
 Imports:
     rstan,
     fields,
-    rstantools
+    rstantools,
+    plyr,
+    dplyr
 Suggests:
     knitr,
     rmarkdown,
