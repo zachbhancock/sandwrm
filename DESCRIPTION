@@ -14,8 +14,9 @@ Imports:
     rstan,
     fields,
     rstantools,
-    plyr,
-    dplyr
+    tidyverse,
+    dplyr,
+    plyr
 Suggests:
     knitr,
     rmarkdown,
