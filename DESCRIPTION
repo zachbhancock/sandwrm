@@ -10,13 +10,14 @@ Authors@R:
 License: GP-3
 Encoding: UTF-8
 LazyData: true
-Imports:
+Depends:
     rstan,
     fields,
-    rstantools,
+    rstantools
+Imports:
     tidyverse,
-    dplyr,
-    plyr
+    plyr,
+    dplyr
 Suggests:
     knitr,
     rmarkdown,
