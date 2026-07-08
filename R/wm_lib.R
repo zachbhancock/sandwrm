@@ -309,7 +309,7 @@ s <- rstan::extract(out$fit, "s", inc_warmup=TRUE, permute=FALSE)
 #make long
 s_long <- plyr::adply(s, c(1, 2, 3)) %>% 
   dplyr::rename("iteration"="iterations", "chain"="chains", "s"="V1") %>%
-  dpylr::mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
+  dplyr::mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
 s_long$pi_c <- 1 - s_long$s
 #plot nbhd
 hist(s_long$pi_c, xlab="species diversity", main="histogram of estimated species diversity", breaks=10)
