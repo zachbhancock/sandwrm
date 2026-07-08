@@ -16,5 +16,4 @@ dataBlock <- prepareData(genDist=genDist, geoDist=geoDist, L=1e4, k=0.25)
 sandwrm(dataBlock=dataBlock, nChains=1, nIter=1000, prefix="test")
 load("test_out.Robj")
 piHistogram(out=out)
-
 }
