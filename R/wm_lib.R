@@ -299,7 +299,7 @@ nbhdHistogram <- function(out){
     iteration = rep(dim_names$iterations, times = length(dim_names$chains) * length(dim_names$parameters)),
     chain     = rep(dim_names$chains, each = length(dim_names$iterations), times = length(dim_names$parameters)),
     parameter = rep(dim_names$parameters, each = length(dim_names$iterations) * length(dim_names$chains)),
-    nbhd         = as.vector(s)
+    nbhd         = as.vector(nbhd)
   )
   
   # Clean up and transform using modern dplyr (no pipe required)
