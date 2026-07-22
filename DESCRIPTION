@@ -16,7 +16,6 @@ Depends:
     rstantools
 Imports:
     tidyverse,
-    plyr,
     dplyr
 Suggests:
     knitr,
