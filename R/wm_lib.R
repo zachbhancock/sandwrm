@@ -289,14 +289,37 @@ plotFit <- function(out,pHom,chainCol){
 #'nbhdHistogram(out=out)
 
 nbhdHistogram <- function(out){
-nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
+  nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
+  
+  # Get dimension names from the Stan array
+  dim_names <- dimnames(nbhd)
+  
+  # Flatten the 3D array into a data frame using base R
+  nbhd_long <- data.frame(
+    iteration = rep(dim_names$iterations, times = length(dim_names$chains) * length(dim_names$parameters)),
+    chain     = rep(dim_names$chains, each = length(dim_names$iterations), times = length(dim_names$parameters)),
+    parameter = rep(dim_names$parameters, each = length(dim_names$iterations) * length(dim_names$chains)),
+    nbhd         = as.vector(s)
+  )
+  
+  # Clean up and transform using modern dplyr (no pipe required)
+  nbhd_long <- dplyr::mutate(nbhd_long, chain = gsub("chain:", "", chain))
+  nbhd_long <- dplyr::filter(nbhd_long, parameter == "nbhd") # Keeps only the 'nbhd' parameter rows
+  nbhd_long <- dplyr::select(nbhd_long, -parameter)
+  
+  # Plot neighborhood
+  hist(nbhd_long$nbhd, xlab="nbhd", main="histogram of estimated nbhd", breaks=10)
+}
+
+#nbhdHistogram <- function(out){
+#nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
 #make long
-nbhd_long <- plyr::adply(nbhd, c(1, 2, 3)) %>% 
-  dplyr::rename("iteration"="iterations", "chain"="chains", "nbhd"="V1") %>%
-  dplyr::mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
+#nbhd_long <- plyr::adply(nbhd, c(1, 2, 3)) %>% 
+#  dplyr::rename("iteration"="iterations", "chain"="chains", "nbhd"="V1") %>%
+#  dplyr::mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
 #plot nbhd
-hist(nbhd_long$nbhd, xlab="nbhd", main="histogram of estimated nbhd", breaks=10)
-  }
+#hist(nbhd_long$nbhd, xlab="nbhd", main="histogram of estimated nbhd", breaks=10)
+#  }
 
 #'Plot histogram of estimated species diversity
 #'@param out R object file that is output from `sandwrm`
@@ -305,15 +328,40 @@ hist(nbhd_long$nbhd, xlab="nbhd", main="histogram of estimated nbhd", breaks=10)
 #'piHistogram(out=out)
 
 piHistogram <- function(out){
-s <- rstan::extract(out$fit, "s", inc_warmup=TRUE, permute=FALSE)
+  s <- rstan::extract(out$fit, "s", inc_warmup=TRUE, permute=FALSE)
+  
+  # Get dimension names from the Stan array
+  dim_names <- dimnames(s)
+  
+  # Flatten the 3D array into a data frame using base R
+  s_long <- data.frame(
+    iteration = rep(dim_names$iterations, times = length(dim_names$chains) * length(dim_names$parameters)),
+    chain     = rep(dim_names$chains, each = length(dim_names$iterations), times = length(dim_names$parameters)),
+    parameter = rep(dim_names$parameters, each = length(dim_names$iterations) * length(dim_names$chains)),
+    s         = as.vector(s)
+  )
+  
+  # Clean up and transform using modern dplyr (no pipe required)
+  s_long <- dplyr::mutate(s_long, chain = gsub("chain:", "", chain))
+  s_long <- dplyr::filter(s_long, parameter == "s") # Keeps only the 's' parameter rows
+  s_long <- dplyr::select(s_long, -parameter)
+  
+  s_long$pi_c <- 1 - s_long$s
+  
+  # Plot neighborhood
+  hist(s_long$pi_c, xlab="species diversity", main="histogram of estimated species diversity", breaks=10)
+}
+
+#piHistogram <- function(out){
+#s <- rstan::extract(out$fit, "s", inc_warmup=TRUE, permute=FALSE)
 #make long
-s_long <- plyr::adply(s, c(1, 2, 3)) %>% 
-  dplyr::rename("iteration"="iterations", "chain"="chains", "s"="V1") %>%
-  dplyr::mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
-s_long$pi_c <- 1 - s_long$s
+#s_long <- plyr::adply(s, c(1, 2, 3)) %>% 
+#  dplyr::rename("iteration"="iterations", "chain"="chains", "s"="V1") %>%
+#  dplyr::mutate(chain = gsub("chain:", "", chain)) %>% dplyr::select(-parameters)
+#s_long$pi_c <- 1 - s_long$s
 #plot nbhd
-hist(s_long$pi_c, xlab="species diversity", main="histogram of estimated species diversity", breaks=10)
-  }
+#hist(s_long$pi_c, xlab="species diversity", main="histogram of estimated species diversity", breaks=10)
+#  }
 
 #below is experimental
 #runWM_cmpLnl <- function(stanMod,dataBlock,nChains,nIter,prefix){
