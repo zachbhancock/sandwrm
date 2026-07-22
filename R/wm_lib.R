@@ -292,7 +292,7 @@ nbhdHistogram <- function(out){
   nbhd <- rstan::extract(out$fit, "nbhd", inc_warmup=TRUE, permute=FALSE)
   nbhd_values <- as.vector(nbhd)
   # Plot neighborhood
-  hist(nbhd_long$nbhd, xlab="nbhd", main="histogram of estimated nbhd", breaks=10)
+  hist(nbhd_values, xlab="nbhd", main="histogram of estimated nbhd", breaks=10)
 }
 
 #nbhdHistogram <- function(out){
